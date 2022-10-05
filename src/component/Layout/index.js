@@ -2,6 +2,7 @@ import React from "react"
 import { Outlet } from "react-router-dom"
 import { Flex } from "@chakra-ui/react"
 import Header from "./Header"
+import Footer from "./Footer";
 
 export default function LandingLayout(props) {
     return (
@@ -14,6 +15,7 @@ export default function LandingLayout(props) {
         >
             <Header/>
             <Outlet />
+            <Footer />
         </Flex>
     )
 }

@@ -64,8 +64,8 @@ const Header = (props) => {
                             <MenuItems to="/">Home</MenuItems>
                             <MenuItems to="#about">Tentang</MenuItems>
                             <MenuItems to="#facilities">Fasilitas </MenuItems>
-                            <MenuItems to="/pricing">Berita</MenuItems>
-                            <MenuItems to="/signup" isLast>
+                            <MenuItems to="#berita">Berita</MenuItems>
+                            <MenuItems to="/psdb" isLast>
                                 <Button
                                     size="sm"
                                     rounded="md"
@@ -73,10 +73,10 @@ const Header = (props) => {
                                     color={["green.500", "green.500", "whiteAlpha.900", "whiteAlpha.900"]}
                                     _hover={{
                                         bg: [
-                                            "primary.100",
-                                            "primary.100",
-                                            "primary.600",
-                                            "primary.600",
+                                            "gray.100",
+                                            "gray.100",
+                                            "gray.600",
+                                            "gray.600",
                                         ],
                                     }}
                                 >

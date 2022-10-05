@@ -4,7 +4,7 @@ import Fasilitas from "./section/fasilitas";
 import SectionTitle from "./section/sectionTitle";
 import Jumbotron from "./section/jumbotron";
 
-export default function Home({}) {
+export default function Home() {
     return (
         <>
             <Jumbotron />
