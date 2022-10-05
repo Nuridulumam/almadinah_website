@@ -1,17 +1,15 @@
 import React from 'react';
-import {AspectRatio, Center, Circle, Heading} from "@chakra-ui/react";
+import {Center, Circle, Text} from "@chakra-ui/react";
 
 const NotFound = () => {
     return (
-        <AspectRatio ratio={16/9}>
-            <Center>
+            <Center minH={'100vh'}>
                 <Circle bg={'salmon'} maxW={'100%'}>
-                    <Heading padding={'2rem'} textAlign={'center'} >
+                    <Text fontSize={'2rem'} fontWeight={'500'} padding={'1rem'} textAlign={'center'} >
                         Maaf halaman tidak ditemukan.
-                    </Heading>
+                    </Text>
                 </Circle>
             </Center>
-        </AspectRatio>
     );
 };
 
