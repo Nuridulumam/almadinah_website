@@ -13,11 +13,12 @@ const Jumbotron = () => {
               w={{base:'auto', md:'8xl'}}
               h={{base:'xs', md:'527px'}}
               mb={{base:3, md:20}}
+              mt={{base:3, md:100}}
               alignItems={'center'}
         >
             <Box pl={{base:7}} w={{base: '70%', md:'40%'}} >
                 <Heading fontSize={'4xl'} color={'white'}>Al Madinah Diwek-Jombang</Heading>
-                <Text fontSize={'2xl'} fontWeight={'bold'} color={'white'}>"Pondok, SMP, SMA"</Text>
+                <Text fontSize={'2xl'} fontWeight={'bold'} color={'white'}>"Pondok, SMP, MA"</Text>
             </Box>
         </Flex>
     );

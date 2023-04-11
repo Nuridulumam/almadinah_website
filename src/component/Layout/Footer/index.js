@@ -1,43 +1,103 @@
-import React from 'react';
-import {Box, Flex, Image, Stack, Text} from "@chakra-ui/react";
+import {
+    Box,
+    chakra,
+    Container, Image,
+    Link,
+    Stack,
+    Text,
+    useColorModeValue,
+    VisuallyHidden,
+} from '@chakra-ui/react';
+import { FaInstagram, FaYoutube } from 'react-icons/fa';
+import { ReactNode } from 'react';
+import Logo from '../../../assets/image/Navbar Logo.svg';
 
-import Instagram from "../../../assets/image/social-icon/instagram 1.png"
-import Youtube from "../../../assets/image/social-icon/youtube.png"
-import Facebook from "../../../assets/image/social-icon/facebook.png"
-import Foot_social from "../../../assets/image/footer/foot_social.png"
-
-const Footer = () => {
+const LogoAlMadinah = (props) => {
     return (
-        <>
-           <Box backgroundImage={Foot_social} backgroundSize={'cover'} w={'100%'} p={3}>
-               <Flex align={'center'} py={2} justify={'center'}>
-                   <Stack direction={{base:"column", md:"row"}} spacing={5}>
-                       <Text fontSize={{base:"xl", md:"2xl"}}
-                             fontWeight={'bold'}
-                             color={'white'}>
-                           Temukan kami di media sosial
-                       </Text>
-                       <Stack justify={'center'}
-                              direction={'row'} s
-                              spacing={5}>
-                           <Image src={Instagram} w={9} h={9}/>
-                           <Image src={Facebook} w={9} h={9}/>
-                           <Image src={Youtube} w={9} h={9}/>
-                       </Stack>
-                   </Stack>
-               </Flex>
-           </Box>
-           <Box bg={'black'} w={'100%'} p={3}>
-               <Text fontSize={'sm'}
-                     textAlign={'center'}
-                     color={'white'}>
-                   Copyright &copy; 2022 Al Madinah Diwek Jombang
-               </Text>
-           </Box>
-        </>
+        <Image
+            w={['32px','32px','60px','60px']}
+            objectFit='cover'
+            src={Logo}
+            alt='logo-almadinah'
+            {...props}
+        />
     );
 };
 
+const SocialButton = ({
+                          children,
+                          label,
+                          href,
+                      }: {
+    children: ReactNode;
+    label: string;
+    href: string;
+}) => {
+    return (
+        <chakra.button
+            bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
+            rounded={'full'}
+            w={8}
+            h={8}
+            cursor={'pointer'}
+            as={'a'}
+            href={href}
+            display={'inline-flex'}
+            alignItems={'center'}
+            justifyContent={'center'}
+            transition={'background 0.3s ease'}
+            _hover={{
+                bg: useColorModeValue('blackAlpha.200', 'whiteAlpha.200'),
+            }}>
+            <VisuallyHidden>{label}</VisuallyHidden>
+            {children}
+        </chakra.button>
+    );
+};
 
-
-export default Footer;
+export default function Footer() {
+    return (
+        <Box
+            bg={useColorModeValue('gray.50', 'gray.900')}
+            color={useColorModeValue('gray.700', 'gray.200')}>
+            <Container
+                as={Stack}
+                maxW={'8xl'}
+                py={4}
+                spacing={4}
+                justify={'center'}
+                align={'center'}>
+                <LogoAlMadinah />
+                <Stack direction={'row'} spacing={6}>
+                    <Link href={'#'}>Home</Link>
+                    <Link href={'#'}>About</Link>
+                    <Link href={'#'}>Blog</Link>
+                    <Link href={'#'}>Contact</Link>
+                </Stack>
+            </Container>
+            <Box
+                borderTopWidth={1}
+                borderStyle={'solid'}
+                borderColor={useColorModeValue('gray.200', 'gray.700')}>
+                <Container
+                    as={Stack}
+                    maxW={'8xl'}
+                    py={4}
+                    direction={{ base: 'column', md: 'row' }}
+                    spacing={4}
+                    justify={{ base: 'center', md: 'space-between' }}
+                    align={{ base: 'center', md: 'center' }}>
+                    <Text>Copyright &copy; 2022 Al Madinah Diwek Jombang</Text>
+                    <Stack direction={'row'} spacing={6}>
+                        <SocialButton label={'YouTube'} href={'#'}>
+                            <FaYoutube />
+                        </SocialButton>
+                        <SocialButton label={'Instagram'} href={'#'}>
+                            <FaInstagram />
+                        </SocialButton>
+                    </Stack>
+                </Container>
+            </Box>
+        </Box>
+    );
+}

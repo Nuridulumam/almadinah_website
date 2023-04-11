@@ -5,7 +5,7 @@ import {Box, Button, Flex, Heading, Image, Stack} from "@chakra-ui/react";
 
 import imgJumbotron from "../../../assets/image/jumbotron/Gedung.png"
 
-const Fasilitas = ({
+const Tentang = ({
                        title,
                        subtitle,
                        image,
@@ -26,7 +26,7 @@ const Fasilitas = ({
         >
             <Stack
                 spacing={4}
-                w={{ base: "80%", md: "40%" }}
+                w={{ base: "80%", md: "50%" }}
                 align={["center", "center", "flex-start", "flex-start"]}
             >
                 <Heading
@@ -45,7 +45,7 @@ const Fasilitas = ({
                     opacity="0.8"
                     fontWeight="normal"
                     lineHeight={1.5}
-                    textAlign={["center", "center", "left", "left"]}
+                    textAlign={["center", "center", "justify", "justify"]}
                 >
                     {subtitle}
                 </Heading>
@@ -62,13 +62,13 @@ const Fasilitas = ({
                     </Button>
                 </Link>
             </Stack>
-            <Box w={{ base: "80%", sm: "60%", md: "50%" }} mb={{ base: 12, md: 0 }}>
+            <Box w={{ base: "80%", sm: "40%", md: "40%" }} mb={{ base: 12, md: 0 }}>
                 <Image src={image} size="100%" rounded="1rem" shadow="2xl" />
             </Box>
         </Flex>
     );
 };
-Fasilitas.propTypes = {
+Tentang.propTypes = {
     title: PropTypes.string,
     subtitle: PropTypes.string,
     image: PropTypes.string,
@@ -76,12 +76,12 @@ Fasilitas.propTypes = {
     ctaLink: PropTypes.string,
 }
 
-Fasilitas.defaultProps = {
-    title: "Al Madinah Diwek Jombang",
-    subtitle: "Yayasan Al Madinah adalah sebuah yayasan yang terdiri dari Pondok Pesantren Putra, SMP, dan SMA",
+Tentang.defaultProps = {
+    title: "Pondok Pesantren Al Madinah",
+    subtitle: "Pondok Pesantren Al Madinah adalah sebuah pondok putra/putri yang terdiri dari Pesantren Putra Darul Iman, Pesantren Putri Umi Kulsum Adnan, SMP, dan MA yang terletak di Kecamatan Diwek, Jombang",
     image: imgJumbotron,
-    ctaText: "Mari Bergabung!",
-    ctaLink: "/signup",
+    ctaText: "Selengkapnya...",
+    ctaLink: "/tentang",
 }
 
-export default Fasilitas;
+export default Tentang;

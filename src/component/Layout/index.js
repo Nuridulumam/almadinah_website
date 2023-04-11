@@ -6,16 +6,18 @@ import Footer from "./Footer";
 
 export default function LandingLayout(props) {
     return (
-        <Flex
-            direction="column"
-            align="center"
-            maxW={{base: "auto", xl: "100%" }}
-            m="0 auto"
-            {...props}
-        >
+        <>
             <Header/>
-            <Outlet />
+                <Flex
+                    direction="column"
+                    align="center"
+                    maxW={{base: "auto", xl: "100%" }}
+                    m="0 auto"
+                    {...props}
+                >
+                    <Outlet />
+                </Flex>
             <Footer />
-        </Flex>
+        </>
     )
 }

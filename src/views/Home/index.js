@@ -1,8 +1,9 @@
 import React from "react"
 
-import Fasilitas from "./section/fasilitas";
+import Tentang from "./section/tentang";
 import SectionTitle from "./section/sectionTitle";
 import Jumbotron from "./section/jumbotron";
+import Facility from "./section/facility";
 
 export default function Home() {
     return (
@@ -13,7 +14,13 @@ export default function Home() {
                 subtitle={'Ketahui lebih banyak tentang kami'}
                 color={'green.500'}
             />
-            <Fasilitas />
+            <Tentang />
+            <SectionTitle
+                title={'Fasilitas'}
+                subtitle={'Ketahui apa yang ada di Pondok Pesantren Al-Madinah'}
+                color={'green.500'}
+            />
+            <Facility/>
         </>
     )
 }
