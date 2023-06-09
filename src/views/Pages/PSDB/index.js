@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     Box,
-    Button,
+    Button, Center,
     Divider,
     Heading,
     Stack, Text
@@ -38,7 +38,7 @@ const Registration = () => {
             <Heading fontSize={{base: '2xl', md: '3xl'}}>
                 PSDB Al Madinah Diwek Jombang
             </Heading>
-            <Text fontSize={{base: 'sm', md: 'md'}}>Formulir pendaftaran Penerimaan Santri Baru Yayasan Al Madinah Diwek Jombang</Text>
+            <Text fontSize={{base: 'sm', md: 'md'}}>Formulir registrasi akun wali / orang tua calon santri baru Yayasan Al Madinah Diwek Jombang</Text>
             <Divider/>
             <Box width={{base: '100%', md: '90vh', lg: '100vh'}}>
                 <Box
@@ -150,18 +150,54 @@ const Registration = () => {
                                       component={formInput}
                                   />
                               </Stack>
-                              <Field
-                                  isRequired
-                                  label={'Jenjang'}
-                                  placeholder={'Pilih Jenjang yang dipilih'}
-                                  style={{
-                                      'isRequired': true,
-                                      'shadow': 'sm',
-                                      'mt': '1rem'
-                                  }}
-                                  options={levels}
-                                  component={formSelect}
-                              />
+                              <Center mt={'3rem'} display={'flex'} flexDirection={'column'}>
+                                  <Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
+                                      <Divider width={'100px'} border={'1px'} borderRadius={'50%'}/>
+                                      <Text fontSize={'18px'} m={'0.5rem'} fontWeight={'700'}>Informasi Akun</Text>
+                                      <Divider width={'100px'} border={'1px'} borderRadius={'50%'}/>
+                                  </Box>
+                                  <Text fontSize={'11px'}>{'digunakan ketika login sistem PSDB Al Madinah'}</Text>
+                              </Center>
+                              <Box mt={'1rem'} p={'1rem'} borderRadius={'10px'}>
+                                  <Stack  spacing={10} direction={{base: 'column', lg: 'row'}}>
+                                      <Field
+                                          type={'email'}
+                                          isRequired
+                                          label={'Email'}
+                                          placeholder={'Masukkan email'}
+                                          style={{
+                                              'isRequired': true,
+                                              'shadow': 'sm',
+                                          }}
+                                          component={formInput}
+                                      />
+                                  </Stack>
+                                  <Stack mt={'1rem'} spacing={10} direction={{base: 'column', lg: 'row'}}>
+                                      <Field
+                                          type={'password'}
+                                          isRequired
+                                          label={'Kata Sandi'}
+                                          placeholder={'Masukkan kata sandi'}
+                                          style={{
+                                              'isRequired': true,
+                                              'shadow': 'sm',
+                                          }}
+                                          component={formInput}
+                                      />
+                                      <Field
+                                          type={'password'}
+                                          isRequired
+                                          label={'Konfirmasi Kata Sandi'}
+                                          placeholder={'Masukkan konfirmasi kata sandi'}
+                                          style={{
+                                              'isRequired': true,
+                                              'shadow': 'sm',
+                                              'mt': '1rem'
+                                          }}
+                                          component={formInput}
+                                      />
+                                  </Stack>
+                              </Box>
                               <Button bgColor={'green.400'} color={'white'} float={'right'} m={'2rem 0.5rem 0 0'} type={'submit'}> Daftar </Button>
                           </form>
                     )}
