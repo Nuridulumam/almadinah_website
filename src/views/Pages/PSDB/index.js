@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {
     Box,
     Button, Center,
@@ -8,22 +8,96 @@ import {
 } from "@chakra-ui/react";
 import {
     Field,
-    Formik
+    Form,
+    Formik,
 } from "formik";
 import {
     formInput,
     formSelect,
     formTextArea
 } from "../../../component/commons/form/input"
+import axios from "axios";
+import * as Yup from 'yup'
+import {API_URL} from "../../../utils";
 
 const Registration = () => {
+    const formRef = useRef();
+    let [province, setProvince] = useState([]);
+    let [city, setCity] = useState([]);
+    let [district, setDistrict] = useState([]);
+    let [subDistrict, setSubDistrict] = useState([]);
+    const getLocation = (type) => {
+        axios.get(`${API_URL}/locations`, {
+            params: {
+                page: 1,
+                length: 10,
+                search: '',
+                type: type
+            }
+        })
+            .then((response) => {
+                switch (type) {
+                    case 'prov':
+                        setProvince(response.data.data.locations.data);
+                        break;
+                    case 'kab':
+                        setCity(response.data.data.locations.data);
+                        break;
+                    case 'district':
+                        setDistrict(response.data.data.locations.data);
+                        break;
+                    case 'subDistrict':
+                        setSubDistrict(response.data.data.locations.data);
+                        break;
+                    default:
+                        break;
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
 
-    let levels = [
-        {label: 'Hanya Pondok', value: 1},
-        {label: 'SMP', value: 2},
-        {label: 'SMA', value: 3},
+    province = province.map((item) => {
+        return {
+            value: item.code,
+            label: item.name
+        }
+    })
+    city = city.map((item) => {
+        return {
+            value: item.code,
+            label: item.name
+        }
+    })
+    district = district.map((item) => {
+        return {
+            value: item.code,
+            label: item.name
+        }
+    })
+    subDistrict = subDistrict.map((item) => {
+        return {
+            value: item.code,
+            label: item.name
+        }
+    })
+
+    useEffect(() => {
+        return () => {
+            getLocation('prov');
+            getLocation('kab');
+            getLocation('district');
+            getLocation('subDistrict');
+        };
+    }, []);
+
+
+    let status = [
+        {label: 'Wali', value: "wali"},
+        {label: 'Ayah', value: "ayah"},
+        {label: 'Ibu', value: "ibu"},
     ]
-
     return (
         <Stack
             width={{base: '100%', lg: '50vw', md: '90vw'}}
@@ -46,161 +120,217 @@ const Registration = () => {
                     padding={'0.5rem'}
                     mb={'1rem'}
                     borderRadius={'0.3rem'}
-                    width={{base: '100%', md:'50vh'}}
+                    width={{base: '100%', md: '50vh'}}
                 >
                     <Text>Yang bertanda (<span style={{color: 'red'}}> * </span>) wajib diisi</Text>
                 </Box>
-                <Formik initialValues={{name: ""}} onSubmit={''}>
-                    {({
-                      values,
-                      errors,
-                      touched,
-                      handleChange,
-                      handleBlur,
-                      handleSubmit,
-                      isSubmitting,
-                      }) => (
-                          <form onSubmit={handleSubmit}>
-                               <Field
-                                  name={'name'}
-                                  label={'Nama Lengkap'}
-                                  placeholder={'Masukkan nama lengkap'}
-                                  style={{
-                                      'isRequired': true,
-                                      'shadow': 'sm',
-                                  }}
-                                  component={formInput}
-                              />
-                              <Field
-                                  isRequired
-                                  label={'Alamat'}
-                                  placeholder={'Masukkan Alamat'}
-                                  style={{
-                                      'isRequired': true,
-                                      'shadow': 'sm',
-                                      'mt': '1rem'
-                                  }}
-                                  component={formTextArea}
-                              />
-                              <Stack mt={'1rem'} spacing={10} direction={{base: 'column', lg: 'row'}}>
-                                  <Field
-                                      isRequired
-                                      label={'Provinsi'}
-                                      placeholder={'Pilih Provinsi'}
-                                      style={{
-                                          'isRequired': true,
-                                          'shadow': 'sm',
-                                      }}
-                                      component={formSelect}
-                                  />
-                                  <Field
-                                      isRequired
-                                      label={'Kota'}
-                                      placeholder={'Pilih Kota'}
-                                      style={{
-                                          'isRequired': true,
-                                          'shadow': 'sm',
-                                          'mt': '1rem'
-                                      }}
-                                      component={formSelect}
-                                  />
-                                  <Field
-                                      isRequired
-                                      label={'Kecamatan'}
-                                      placeholder={'Pilih Kecamatan'}
-                                      style={{
-                                          'isRequired': true,
-                                          'shadow': 'sm',
-                                          'mt': '1rem'
-                                      }}
-                                      component={formSelect}
-                                  />
-                              </Stack>
-                              <Stack mt={'1rem'} spacing={10} direction={{base: 'column', lg: 'row'}}>
-                                  <Field
-                                      isRequired
-                                      label={'Desa'}
-                                      placeholder={'Pilih Desa'}
-                                      style={{
-                                          'isRequired': true,
-                                          'shadow': 'sm',
-                                      }}
-                                      component={formSelect}
-                                  />
-                                  <Field
-                                      isRequired
-                                      label={'RT'}
-                                      placeholder={'Masukkan RT'}
-                                      style={{
-                                          'isRequired': true,
-                                          'shadow': 'sm',
-                                          'mt': '1rem'
-                                      }}
-                                      component={formInput}
-                                  />
-                                  <Field
-                                      isRequired
-                                      label={'RW'}
-                                      placeholder={'Masukkan RW'}
-                                      style={{
-                                          'isRequired': true,
-                                          'shadow': 'sm',
-                                          'mt': '1rem'
-                                      }}
-                                      component={formInput}
-                                  />
-                              </Stack>
-                              <Center mt={'3rem'} display={'flex'} flexDirection={'column'}>
-                                  <Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
-                                      <Divider width={'100px'} border={'1px'} borderRadius={'50%'}/>
-                                      <Text fontSize={'18px'} m={'0.5rem'} fontWeight={'700'}>Informasi Akun</Text>
-                                      <Divider width={'100px'} border={'1px'} borderRadius={'50%'}/>
-                                  </Box>
-                                  <Text fontSize={'11px'}>{'digunakan ketika login sistem PSDB Al Madinah'}</Text>
-                              </Center>
-                              <Box mt={'1rem'} p={'1rem'} borderRadius={'10px'}>
-                                  <Stack  spacing={10} direction={{base: 'column', lg: 'row'}}>
-                                      <Field
-                                          type={'email'}
-                                          isRequired
-                                          label={'Email'}
-                                          placeholder={'Masukkan email'}
-                                          style={{
-                                              'isRequired': true,
-                                              'shadow': 'sm',
-                                          }}
-                                          component={formInput}
-                                      />
-                                  </Stack>
-                                  <Stack mt={'1rem'} spacing={10} direction={{base: 'column', lg: 'row'}}>
-                                      <Field
-                                          type={'password'}
-                                          isRequired
-                                          label={'Kata Sandi'}
-                                          placeholder={'Masukkan kata sandi'}
-                                          style={{
-                                              'isRequired': true,
-                                              'shadow': 'sm',
-                                          }}
-                                          component={formInput}
-                                      />
-                                      <Field
-                                          type={'password'}
-                                          isRequired
-                                          label={'Konfirmasi Kata Sandi'}
-                                          placeholder={'Masukkan konfirmasi kata sandi'}
-                                          style={{
-                                              'isRequired': true,
-                                              'shadow': 'sm',
-                                              'mt': '1rem'
-                                          }}
-                                          component={formInput}
-                                      />
-                                  </Stack>
-                              </Box>
-                              <Button bgColor={'green.400'} color={'white'} float={'right'} m={'2rem 0.5rem 0 0'} type={'submit'}> Daftar </Button>
-                          </form>
-                    )}
+                <Formik
+                    innerRef={formRef}
+                    initialValues={{
+                        name: '',
+                        asOrtu: '',
+                        alamat: '',
+                        province: '',
+                        city: '',
+                        district: '',
+                        subDistrict: '',
+                        rt: '',
+                        rw: '',
+                        email: '',
+                        password: '',
+                    }}
+                    validationSchema={Yup.object({
+                        name: Yup.string()
+                            .required('Required'),
+                    })}
+                    onSubmit={(values, {setSubmitting}) => {
+                        axios.post(`${API_URL}/registrations`, {
+                            name: values.name,
+                            asOrtu: values.asOrtu,
+                            alamat: values.alamat,
+                            province: parseInt(values.province),
+                            city: parseInt(values.city),
+                            district: parseInt(values.district),
+                            subDistrict: parseInt(values.subDistrict),
+                            rt: parseInt(values.rt),
+                            rw: parseInt(values.rw),
+                            email: values.email,
+                            password: values.new_password
+                        })
+                            .then((response) => {
+                                console.log(response.data);
+                                setSubmitting(false)
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                            })
+                    }}>
+                    <Form>
+                        <Field
+                            name={'name'}
+                            label={'Nama Lengkap'}
+                            placeholder={'Masukkan nama lengkap'}
+                            style={{
+                                'isRequired': true,
+                                'shadow': 'sm',
+                            }}
+                            component={formInput}
+                        />
+                        <Field
+                            name={'asOrtu'}
+                            label={'Sebagai'}
+                            placeholder={'Pilih status sebagai'}
+                            options={status}
+                            style={{
+                                'isRequired': true,
+                                'shadow': 'sm',
+                                'mt': '1rem'
+                            }}
+                            component={formSelect}
+                        />
+                        <Field
+                            name={'alamat'}
+                            isRequired
+                            label={'Alamat'}
+                            placeholder={'Masukkan Alamat'}
+                            style={{
+                                'isRequired': true,
+                                'shadow': 'sm',
+                                'mt': '1rem'
+                            }}
+                            component={formTextArea}
+                        />
+                        <Stack mt={'1rem'} spacing={10} direction={{base: 'column', md: 'column', lg: 'row'}}>
+                            <Field
+                                name={'province'}
+                                isRequired
+                                label={'Provinsi'}
+                                placeholder={'Pilih Provinsi'}
+                                options={province}
+                                style={{
+                                    'isRequired': true,
+                                    'shadow': 'sm',
+                                }}
+                                component={formSelect}
+                            />
+                            <Field
+                                name={'city'}
+                                isRequired
+                                label={'Kota'}
+                                placeholder={'Pilih Kota'}
+                                options={city}
+                                style={{
+                                    'isRequired': true,
+                                    'shadow': 'sm',
+                                    'mt': '1rem'
+                                }}
+                                component={formSelect}
+                            />
+                            <Field
+                                name={'district'}
+                                isRequired
+                                label={'Kecamatan'}
+                                placeholder={'Pilih Kecamatan'}
+                                options={district}
+                                style={{
+                                    'isRequired': true,
+                                    'shadow': 'sm',
+                                    'mt': '1rem'
+                                }}
+                                component={formSelect}
+                            />
+                        </Stack>
+                        <Stack mt={'1rem'} spacing={10} direction={{base: 'column', lg: 'row'}}>
+                            <Field
+                                name={'subDistrict'}
+                                isRequired
+                                label={'Desa'}
+                                options={subDistrict}
+                                placeholder={'Pilih Desa'}
+                                style={{
+                                    'isRequired': true,
+                                    'shadow': 'sm',
+                                }}
+                                component={formSelect}
+                            />
+                            <Field
+                                name={'rt'}
+                                isRequired
+                                label={'RT'}
+                                placeholder={'Masukkan RT'}
+                                style={{
+                                    'isRequired': true,
+                                    'shadow': 'sm',
+                                    'mt': '1rem'
+                                }}
+                                component={formInput}
+                            />
+                            <Field
+                                name={'rw'}
+                                isRequired
+                                label={'RW'}
+                                placeholder={'Masukkan RW'}
+                                style={{
+                                    'isRequired': true,
+                                    'shadow': 'sm',
+                                    'mt': '1rem'
+                                }}
+                                component={formInput}
+                            />
+                        </Stack>
+                        <Center mt={'3rem'} display={'flex'} flexDirection={'column'}>
+                            <Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
+                                <Divider width={'100px'} border={'1px'} borderRadius={'50%'}/>
+                                <Text fontSize={'18px'} m={'0.5rem'} fontWeight={'700'}>Informasi Akun</Text>
+                                <Divider width={'100px'} border={'1px'} borderRadius={'50%'}/>
+                            </Box>
+                            <Text fontSize={'11px'}>{'digunakan ketika login sistem PSDB Al Madinah'}</Text>
+                        </Center>
+                        <Box mt={'1rem'} p={'1rem'} borderRadius={'10px'}>
+                            <Stack spacing={10} direction={{base: 'column', lg: 'row'}}>
+                                <Field
+                                    name={'email'}
+                                    type={'email'}
+                                    isRequired
+                                    label={'Email'}
+                                    placeholder={'Masukkan email'}
+                                    style={{
+                                        'isRequired': true,
+                                        'shadow': 'sm',
+                                    }}
+                                    component={formInput}
+                                />
+                            </Stack>
+                            <Stack mt={'1rem'} spacing={10} direction={{base: 'column', lg: 'row'}}>
+                                <Field
+                                    name={'new_password'}
+                                    type={'password'}
+                                    isRequired
+                                    label={'Kata Sandi'}
+                                    placeholder={'Masukkan kata sandi'}
+                                    style={{
+                                        'isRequired': true,
+                                        'shadow': 'sm',
+                                    }}
+                                    component={formInput}
+                                />
+                                <Field
+                                    name={'confirm_new_password'}
+                                    type={'password'}
+                                    isRequired
+                                    label={'Konfirmasi Kata Sandi'}
+                                    placeholder={'Masukkan konfirmasi kata sandi'}
+                                    style={{
+                                        'isRequired': true,
+                                        'shadow': 'sm',
+                                        'mt': '1rem'
+                                    }}
+                                    component={formInput}
+                                />
+                            </Stack>
+                        </Box>
+                        <Button bgColor={'green.400'} color={'white'} float={'right'} m={'2rem 0.5rem 0 0'} type={'submit'}> Daftar </Button>
+                    </Form>
                 </Formik>
             </Box>
         </Stack>

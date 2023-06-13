@@ -8,46 +8,55 @@ import {
 
 import { Select, AsyncSelect } from "chakra-react-select"
 
-export const formInput = ({...props}) => {
+export const formInput = ({field, form: { touched, errors }, ...props}) => {
     return (
         <FormControl {...props.style}>
             <FormLabel>{props.label}</FormLabel>
-            <Input type={props.type} placeholder={props.placeholder} />
-            {props.formHelperText && <FormHelperText>{props.formHelperText}</FormHelperText>}
+            <Input {...field} {...props} />
+            {touched[field.name] && errors[field.name] && <FormHelperText>{errors[field.name]}</FormHelperText>}
         </FormControl>
     );
 };
 
-export const formTextArea = ({...props}) => {
+export const formTextArea = ({field, form: { touched, errors }, ...props}) => {
     return (
         <FormControl {...props.style}>
             <FormLabel>{props.label}</FormLabel>
-            <Textarea isInvalid={props.isInvalid} placeholder={props.placeholder} />
-            {props.formHelperText && <FormHelperText>{props.formHelperText}</FormHelperText>}
+            <Textarea {...field} {...props} />
+            {touched[field.name] && errors[field.name] && <FormHelperText>{errors[field.name]}</FormHelperText>}
         </FormControl>
     )
 }
 
-export const formSelect = ({...props}) => {
+export const formSelect = ({field, form, ...props}) => {
+    const { name } = field;
+    const { touched, errors } = form;
+    const handleChange = (selectedOption) => {
+        const selectedValue = selectedOption ? selectedOption.value : null;
+        form.setFieldValue(name, selectedValue);
+    };
+    const handleBlur = () => {
+        form.setFieldTouched(name, true);
+    };
     return(
         <FormControl {...props.style}>
             <FormLabel>{props.label}</FormLabel>
             {props.isAsync ? (
                 <AsyncSelect
-                    options={props.options}
-                    size={props.size}
-                    isInvalid={props.isInvalid}
-                    placeholder={props.placeholder}
+                    {...props}
+                    name={name}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                 />
             ) : (
                 <Select
-                    options={props.options}
-                    size={props.size}
-                    isInvalid={props.isInvalid}
-                    placeholder={props.placeholder}
+                    {...props}
+                    name={name}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                 />
             )}
-            {props.formHelperText && <FormHelperText>{props.formHelperText}</FormHelperText>}
+            {touched[name] && errors[name] && <FormHelperText>{errors[name]}</FormHelperText>}
         </FormControl>
     )
 }
