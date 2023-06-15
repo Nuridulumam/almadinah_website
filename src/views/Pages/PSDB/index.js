@@ -12,6 +12,7 @@ import {
     Formik,
 } from "formik";
 import {
+    formAsyncSelect,
     formInput,
     formSelect,
     formTextArea
@@ -22,76 +23,72 @@ import {API_URL} from "../../../utils";
 
 const Registration = () => {
     const formRef = useRef();
+    console.log(formRef)
     let [province, setProvince] = useState([]);
     let [city, setCity] = useState([]);
     let [district, setDistrict] = useState([]);
     let [subDistrict, setSubDistrict] = useState([]);
-    const getLocation = (type) => {
+    const [selectedProv, setSelectedProv] = useState('');
+    const [selectedCity, setSelectedCity] = useState('');
+    const [selectedDistrict, setSelectedDistrict] = useState('');
+    const getLocation = (type, codeType, search) => {
         axios.get(`${API_URL}/locations`, {
             params: {
                 page: 1,
                 length: 10,
-                search: '',
-                type: type
+                search: search,
+                type: type,
+                codeType: codeType
             }
         })
             .then((response) => {
+                let data = response.data.data.locations.data.map((item) => {
+                    return {
+                        value: item.code,
+                        label: item.name
+                    }
+                });
                 switch (type) {
-                    case 'prov':
-                        setProvince(response.data.data.locations.data);
+                    case 'province':
+                        setProvince(data);
                         break;
-                    case 'kab':
-                        setCity(response.data.data.locations.data);
+                    case 'city':
+                        setCity(data);
                         break;
                     case 'district':
-                        setDistrict(response.data.data.locations.data);
+                        setDistrict(data);
                         break;
                     case 'subDistrict':
-                        setSubDistrict(response.data.data.locations.data);
+                        setSubDistrict(data);
                         break;
                     default:
                         break;
                 }
+
+                return data;
             })
             .catch((error) => {
                 console.log(error);
             })
     }
 
-    province = province.map((item) => {
-        return {
-            value: item.code,
-            label: item.name
-        }
-    })
-    city = city.map((item) => {
-        return {
-            value: item.code,
-            label: item.name
-        }
-    })
-    district = district.map((item) => {
-        return {
-            value: item.code,
-            label: item.name
-        }
-    })
-    subDistrict = subDistrict.map((item) => {
-        return {
-            value: item.code,
-            label: item.name
-        }
-    })
-
     useEffect(() => {
         return () => {
-            getLocation('prov');
-            getLocation('kab');
-            getLocation('district');
-            getLocation('subDistrict');
+            getLocation('province');
         };
     }, []);
 
+    useEffect(() => {
+        if (selectedProv) {
+            getLocation('city', selectedProv)
+        }
+        if (selectedCity) {
+            getLocation('district', selectedCity)
+        }
+        if (selectedDistrict) {
+            getLocation('subDistrict', selectedDistrict)
+        }
+    }, [selectedProv, selectedCity, selectedDistrict]);
 
     let status = [
         {label: 'Wali', value: "wali"},
@@ -158,7 +155,6 @@ const Registration = () => {
                             password: values.new_password
                         })
                             .then((response) => {
-                                console.log(response.data);
                                 setSubmitting(false)
                             })
                             .catch((error) => {
@@ -202,42 +198,53 @@ const Registration = () => {
                         />
                         <Stack mt={'1rem'} spacing={10} direction={{base: 'column', md: 'column', lg: 'row'}}>
                             <Field
-                                name={'province'}
                                 isRequired
+                                name={'province'}
                                 label={'Provinsi'}
                                 placeholder={'Pilih Provinsi'}
-                                options={province}
+                                defaultOptions={province}
+                                selected={(data) => {
+                                    setSelectedProv(data)
+                                }}
                                 style={{
                                     'isRequired': true,
                                     'shadow': 'sm',
                                 }}
-                                component={formSelect}
+                                component={formAsyncSelect}
                             />
                             <Field
                                 name={'city'}
                                 isRequired
                                 label={'Kota'}
                                 placeholder={'Pilih Kota'}
-                                options={city}
+                                defaultOptions={city}
+                                selected={(data) => {
+                                    setSelectedCity(data)
+                                }}
+                                selectedProv={selectedProv}
                                 style={{
                                     'isRequired': true,
                                     'shadow': 'sm',
                                     'mt': '1rem'
                                 }}
-                                component={formSelect}
+                                component={formAsyncSelect}
                             />
                             <Field
                                 name={'district'}
                                 isRequired
                                 label={'Kecamatan'}
                                 placeholder={'Pilih Kecamatan'}
-                                options={district}
+                                defaultOptions={district}
+                                selected={(data) => {
+                                    setSelectedDistrict(data)
+                                }}
+                                selectedCity={selectedCity}
                                 style={{
                                     'isRequired': true,
                                     'shadow': 'sm',
                                     'mt': '1rem'
                                 }}
-                                component={formSelect}
+                                component={formAsyncSelect}
                             />
                         </Stack>
                         <Stack mt={'1rem'} spacing={10} direction={{base: 'column', lg: 'row'}}>
@@ -245,13 +252,14 @@ const Registration = () => {
                                 name={'subDistrict'}
                                 isRequired
                                 label={'Desa'}
-                                options={subDistrict}
                                 placeholder={'Pilih Desa'}
+                                defaultOptions={subDistrict}
+                                selectedDistrict={selectedDistrict}
                                 style={{
                                     'isRequired': true,
                                     'shadow': 'sm',
                                 }}
-                                component={formSelect}
+                                component={formAsyncSelect}
                             />
                             <Field
                                 name={'rt'}
