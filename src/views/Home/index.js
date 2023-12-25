@@ -16,8 +16,8 @@ export default function Home() {
             />
             <Tentang />
             <SectionTitle
-                title={'Fasilitas'}
-                subtitle={'Ketahui apa yang ada di Pondok Pesantren Al-Madinah'}
+                title={'Program'}
+                subtitle={'Ketahui program yang ada di Pondok Pesantren Al-Madinah'}
                 color={'green.500'}
             />
             <Facility/>
