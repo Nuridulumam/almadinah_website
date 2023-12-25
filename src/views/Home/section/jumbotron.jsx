@@ -1,27 +1,29 @@
-import React from 'react';
-import {Box, Flex, Heading, Text} from "@chakra-ui/react";
+import React from "react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 
-import imgJumbotron from "../../../assets/image/jumbotron/jumbotron.png"
+import imgJumbotron from "../../../assets/image/jumbotron/jumbotron.png";
 
 const Jumbotron = () => {
-    return (
-        <Flex wrap={'wrap'}
-              borderRadius={{base:'auto', md:'3xl'}}
-              backgroundImage={imgJumbotron}
-              backgroundRepeat={'no-repeat'}
-              backgroundSize={{base:'200% 100%', md:'cover'}}
-              w={{base:'auto', md:'8xl'}}
-              h={{base:'xs', md:'527px'}}
-              mb={{base:3, md:20}}
-              mt={{base:3, md:100}}
-              alignItems={'center'}
-        >
-            <Box pl={{base:7}} w={{base: '70%', md:'40%'}} >
-                <Heading fontSize={'4xl'} color={'white'}>Al Madinah Diwek-Jombang</Heading>
-                <Text fontSize={'2xl'} fontWeight={'bold'} color={'white'}>"Pondok, SMP, MA"</Text>
-            </Box>
-        </Flex>
-    );
+  return (
+    <Flex
+      wrap={"wrap"}
+      borderRadius={{ base: "2xl", lg: "3xl" }}
+      backgroundImage={imgJumbotron}
+      backgroundRepeat={"no-repeat"}
+      backgroundSize={{ base: "150%", lg: "cover" }}
+      w={{ base: "3xl", lg: "86vw" }}
+      h={{ base: "50vh", lg: "70vh" }}
+      mb={{ base: 3, lg: 20 }}
+      mt={{ base: 3, lg: 100 }}
+      alignItems={"end"}
+    >
+      <Box pl={{ base: 7, md: 10 }} pb={{base: 10, md: '2rem'}} w={{ base: "50%", lg: "40%" }}>
+        <Heading fontSize={"4xl"} color={"white"}>
+          YAYASAN AL MADINAH TEBUIRENG JOMBANG
+        </Heading>
+      </Box>
+    </Flex>
+  );
 };
 
 export default Jumbotron;

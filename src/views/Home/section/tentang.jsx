@@ -80,8 +80,8 @@ Tentang.defaultProps = {
     title: "Pondok Pesantren Al Madinah",
     subtitle: "Pondok Pesantren Al Madinah adalah sebuah pondok putra/putri yang terdiri dari Pesantren Putra Darul Iman, Pesantren Putri Umi Kulsum Adnan, SMP, dan MA yang terletak di Kecamatan Diwek, Jombang",
     image: imgJumbotron,
-    ctaText: "Selengkapnya...",
-    ctaLink: "/tentang",
+    ctaText: "Daftar",
+    ctaLink: "/psdb",
 }
 
 export default Tentang;

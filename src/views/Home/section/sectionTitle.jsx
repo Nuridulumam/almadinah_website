@@ -19,6 +19,7 @@ const SectionTitle = ({
                 fontSize={fontSize}
                 fontWeight={fontWeight}
                 mt={2}
+                align={'center'}
             >
                 {subtitle}
             </Text>
