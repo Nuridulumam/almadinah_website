@@ -23,7 +23,6 @@ import {API_URL} from "../../../utils";
 
 const Registration = () => {
     const formRef = useRef();
-    console.log(formRef)
     let [province, setProvince] = useState([]);
     let [city, setCity] = useState([]);
     let [district, setDistrict] = useState([]);
