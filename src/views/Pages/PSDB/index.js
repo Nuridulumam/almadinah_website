@@ -72,9 +72,7 @@ const Registration = () => {
     }
 
     useEffect(() => {
-        return () => {
-            getLocation('province');
-        };
+        getLocation('province');
     }, []);
 
     useEffect(() => {
