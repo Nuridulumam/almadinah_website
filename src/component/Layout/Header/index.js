@@ -47,6 +47,7 @@ const Header = (props) => {
   return (
     <Flex
       as="header"
+      zIndex="sticky"
       position="fixed"
       align="center"
       justify="space-between"
@@ -97,7 +98,7 @@ const Header = (props) => {
             pt={[4, 4, 0, 0]}
           >
             {path.includes("psdb") ? (
-              <MenuItems to="/">Home</MenuItems>
+              <></>
             ) : (
               <>
                 <MenuItems>

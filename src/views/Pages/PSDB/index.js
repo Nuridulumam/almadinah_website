@@ -108,7 +108,7 @@ const Registration = () => {
             </Heading>
             <Text fontSize={{base: 'sm', md: 'md'}}>Formulir registrasi akun wali / orang tua calon santri baru Yayasan Al Madinah Diwek Jombang</Text>
             <Divider/>
-            <Box width={{base: '100%', md: '90vh', lg: '100vh'}}>
+            <Box maxW={{base: '100%', md: '90vh', lg: '100vh'}}>
                 <Box
                     backgroundColor={'blackAlpha.200'}
                     padding={'0.5rem'}
@@ -286,7 +286,7 @@ const Registration = () => {
                         <Center mt={'3rem'} display={'flex'} flexDirection={'column'}>
                             <Box display={'flex'} flexDirection={'row'} alignItems={'center'}>
                                 <Divider width={'100px'} border={'1px'} borderRadius={'50%'}/>
-                                <Text fontSize={'18px'} m={'0.5rem'} fontWeight={'700'}>Informasi Akun</Text>
+                                <Text textAlign={'center'} fontSize={'18px'} m={'0.5rem'} fontWeight={'700'}>Informasi Akun</Text>
                                 <Divider width={'100px'} border={'1px'} borderRadius={'50%'}/>
                             </Box>
                             <Text fontSize={'11px'}>{'digunakan ketika login sistem PSDB Al Madinah'}</Text>

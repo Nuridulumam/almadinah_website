@@ -6,9 +6,8 @@ import imgJumbotron from "../../../assets/image/jumbotron/jumbotron.png";
 const Jumbotron = () => {
   return (
     <Flex
-      id="home"
       wrap={"wrap"}
-      borderRadius={{ base: "2xl", lg: "3xl" }}
+      borderRadius={{ base: "2xl", md: "3xl", lg: "3xl" }}
       backgroundImage={imgJumbotron}
       backgroundRepeat={"no-repeat"}
       backgroundSize={{ base: "150%", lg: "cover" }}
@@ -19,11 +18,13 @@ const Jumbotron = () => {
       alignItems={"end"}
     >
       <Box
-        pl={{ base: 7, md: 10 }}
-        pb={{ base: 10, md: "2rem" }}
-        w={{ base: "50%", lg: "40%" }}
+        alignItems={"center"}
+        textAlign={{ base: "left", md: "left" }}
+        pl={{ base: "13rem", md: 10 }}
+        pb={{ base: 10, md: "10rem", lg: "2rem" }}
+        w={{ base: "75%", md: "70%", lg: "40%" }}
       >
-        <Heading fontSize={"4xl"} color={"white"}>
+        <Heading fontSize={{ base: "2xl", md: "4xl" }} color={"white"}>
           YAYASAN AL MADINAH TEBUIRENG JOMBANG
         </Heading>
       </Box>
