@@ -58,7 +58,7 @@ export const formAsyncSelect = ({field, form, selected, ...props}) => {
     const {name} = field;
     const {selectedProv, selectedCity, selectedDistrict} = props;
     const {setFieldValue, setFieldTouched, touched, errors} = form;
-    let callAPI = null;
+    let callAPI = null, responseJSON;
 
     const handleInputChange = (inputValue, {action}) => {
         if (action === 'clear') {
@@ -95,18 +95,33 @@ export const formAsyncSelect = ({field, form, selected, ...props}) => {
         }
         
     callAPI = setTimeout(async () => {
-        const response = await axios.get(`${API_URL}/locations`, {
+        const response = await axios.get(`${API_URL}/locations/${name}`, {
             params: {
                 page: 1,
                 length: 10,
                 search: inputValue,
-                type: name,
-                codeType: codeType,
+                code: codeType,
             }
         });
-        const data = await response.data.data.locations.data;
+        switch (name) {
+            case 'province':
+                responseJSON = await response.data.province;
+                break;
+            case 'city':
+                responseJSON = await response.data.city;
+                break;
+            case 'district':
+                responseJSON = await response.data.district;
+                break;
+            case 'subDistrict':
+                responseJSON = await response.data.subDistrict;
+                break;
+            default:
+                break;
+        }
+        
 
-        const options = data.map((item) => ({
+        const options = responseJSON.map((item) => ({
             value: item.code,
             label: item.name,
         }));

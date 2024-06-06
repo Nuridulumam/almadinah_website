@@ -31,34 +31,52 @@ const Registration = () => {
     const [selectedCity, setSelectedCity] = useState('');
     const [selectedDistrict, setSelectedDistrict] = useState('');
     const getLocation = (type, codeType, search) => {
-        axios.get(`${API_URL}/locations`, {
+        axios.get(`${API_URL}/locations/${type}`, {
             params: {
                 page: 1,
                 length: 10,
                 search: search,
-                type: type,
-                codeType: codeType
+                code: codeType
             }
         })
             .then((response) => {
-                let data = response.data.data.locations.data.map((item) => {
-                    return {
-                        value: item.code,
-                        label: item.name
-                    }
-                });
+                let data = response.data;
                 switch (type) {
                     case 'province':
-                        setProvince(data);
+                        const Prov = data.province.map((item) => {
+                            return {
+                                value: item.code,
+                                label: item.name
+                            }
+                        });
+                        setProvince(Prov);
                         break;
                     case 'city':
-                        setCity(data);
+                        const City = data.city.map((item) => {
+                            return {
+                                value: item.code,
+                                label: item.name
+                            }
+                        });
+                        setCity(City);
                         break;
                     case 'district':
-                        setDistrict(data);
+                        const District = data.district.map((item) => {
+                            return {
+                                value: item.code,
+                                label: item.name
+                            }
+                        });
+                        setDistrict(District);
                         break;
                     case 'subDistrict':
-                        setSubDistrict(data);
+                        const SubDistrict = data.subDistrict.map((item) => {
+                            return {
+                                value: item.code,
+                                label: item.name
+                            }
+                        });
+                        setSubDistrict(SubDistrict);
                         break;
                     default:
                         break;
@@ -138,16 +156,16 @@ const Registration = () => {
                             .required('Required'),
                     })}
                     onSubmit={(values, {setSubmitting}) => {
-                        axios.post(`${API_URL}/registrations`, {
+                        axios.post(`${API_URL}/registration`, {
                             name: values.name,
                             asOrtu: values.asOrtu,
                             alamat: values.alamat,
-                            province: parseInt(values.province),
-                            city: parseInt(values.city),
-                            district: parseInt(values.district),
-                            subDistrict: parseInt(values.subDistrict),
-                            rt: parseInt(values.rt),
-                            rw: parseInt(values.rw),
+                            province: values.province,
+                            city: values.city,
+                            district: values.district,
+                            subDistrict: values.subDistrict,
+                            rt: values.rt,
+                            rw: values.rw,
                             email: values.email,
                             password: values.new_password
                         })
@@ -206,6 +224,7 @@ const Registration = () => {
                                 style={{
                                     'isRequired': true,
                                     'shadow': 'sm',
+                                    'mt': '1rem'
                                 }}
                                 component={formAsyncSelect}
                             />
@@ -255,6 +274,7 @@ const Registration = () => {
                                 style={{
                                     'isRequired': true,
                                     'shadow': 'sm',
+                                    'mt': '1rem'
                                 }}
                                 component={formAsyncSelect}
                             />
@@ -316,6 +336,7 @@ const Registration = () => {
                                     style={{
                                         'isRequired': true,
                                         'shadow': 'sm',
+                                        'mt': '1rem'
                                     }}
                                     component={formInput}
                                 />
